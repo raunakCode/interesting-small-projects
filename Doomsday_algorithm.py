@@ -1,5 +1,5 @@
 from random import randint
-import time
+import time, os, sys
 
 months = ["Poop", "Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep","Oct", "Nov", "Dec"]
 thirty1 = ["Jan", "March", "May", "July", "August", "Oct", "Dec"]
@@ -54,8 +54,12 @@ while (1):
         ans += 7
 
     ans = str(ans%7)
+    been_wrong = 0
     while (1):
         s = input()
+        if not been_wrong:
+            sys.stdout.write("\033[F")  
+            sys.stdout.write("\033[K")  
         if (s == ans):
             time2 = time.time()
             duration = int((time2-time1)*100)/100
@@ -73,8 +77,15 @@ while (1):
             if count%10 == 0:
                 print("Times played: " + str(count))
             break
+
+        if been_wrong:
+            for _ in range(4):
+                sys.stdout.write("\033[F")  
+                sys.stdout.write("\033[K")  
+        print(s)
         print("You are wrong. Try again.")
         print("Remember to give your answer in the form mentioned above.")
+        been_wrong = 1
 
     doomsDays[1:3] = [3, 28]
     print("Type any key to continue or 'stop' to stop the session")
