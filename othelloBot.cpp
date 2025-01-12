@@ -28,12 +28,17 @@ struct GameBoard {
 
 	void printBoard() {
 		system("clear");
+		for(int i = 0; i < 8 * 2 + 1; i++) cout << '-';
+		cout << '\n';
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
-				if (board[i][j] == EMPTY) cout << '*';
-				if (board[i][j] == BLACK) cout << 'X';
-				if (board[i][j] == WHITE) cout << 'O';
+				if (j == 0) cout << '|';
+				if (board[i][j] == EMPTY) cout << "*|";
+				if (board[i][j] == BLACK) cout << "X|";
+				if (board[i][j] == WHITE) cout << "O|";
 			}
+			cout << '\n';
+			for(int i = 0; i < 8 * 2 + 1; i++) cout << '-';
 			cout << '\n';
 		}
 	}
