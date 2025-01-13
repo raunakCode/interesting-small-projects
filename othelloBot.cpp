@@ -26,19 +26,31 @@ struct GameBoard {
 	void printBoard() {
 		system("clear");
 		cout << "\033[32m";
+		cout << "  ";
 		for(int i = 0; i < BOARD_SIZE * 3 + 1; i++) cout << '-';
 		cout << '\n';
 		for(int i = 0; i < BOARD_SIZE; i++) {
+			cout << "\033[0m";
+			cout << i + 1 << ' ';
+			cout << "\033[32m";
 			for(int j = 0; j < BOARD_SIZE; j++) {
 				if (j == 0) cout << '|';
 				if (board[i][j] == EMPTY) cout << "  |";
 				if (board[i][j] == BLACK) cout << "\u26ab|";
 				if (board[i][j] == WHITE) cout << "\u26aa|";
 			}
-			cout << '\n';
-			for(int i = 0; i < BOARD_SIZE * 3 + 1; i++) cout << '-';
+			cout << "\n  ";
+			for(int j = 0; j < BOARD_SIZE * 3 + 1; j++) cout << '-';
 			cout << '\n';
 		}
+		cout << "   ";
+		for(int i = 0; i < BOARD_SIZE; i++) {
+			if (i == 0) cout << ' ';
+			cout << "\033[0m";
+			cout << char(i + 'a') << "  ";
+			cout << "\033[32m";
+		}
+		cout << '\n';
 		cout << "\033[0m";
 	}
 
@@ -113,7 +125,6 @@ struct GameBoard {
 	int search(int depth) {
 		if (depth == 0) return evaluate();
 		int minEval = 100000000;
-		//int minEval = -100000000;
 		vector<pair<int, int>> moves = getMoves();	
 		for(auto &mv: moves) {
 			GameBoard curBoard;
@@ -121,7 +132,6 @@ struct GameBoard {
 			curBoard.turn = turn;
 			curBoard.movesMade = movesMade;
 			curBoard.tryMove(mv.first, mv.second);
-			//minEval = min(curBoard.search(depth - 1), minEval);
 			minEval = min(curBoard.search(depth - 1), minEval);
 		}
 		return -minEval;
@@ -195,10 +205,12 @@ int main() {
 
 	GameBoard board;
 	board.printBoard();
-	int row, col;
-	while(cin >> row) {
-		cin >> col;
-		row--, col--;
+	int row;
+	char COL;
+	while(cin >> COL) {
+		cin >> row;
+		row--;
+		int col = COL - 'a';
 		bool attempt = board.tryMove(row, col);
 		if (!attempt) {
 			cout << "not valid move\n";
