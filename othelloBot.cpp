@@ -205,6 +205,12 @@ int main() {
 
 	GameBoard board;
 	board.printBoard();
+	cout << "Print W or B." << '\n';
+	char p; cin >> p;
+	if (p == 'W') {
+		board.performBestMove(6);
+		board.printBoard();
+	}
 	int row;
 	char COL;
 	while(cin >> COL) {
